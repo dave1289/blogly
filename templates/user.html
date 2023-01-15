@@ -5,22 +5,22 @@
 {% endblock %}
 
 {% block body %}
-<h1>User Details</h1>
+<h1 class="display-1 text-center">User Details</h1>
 <form action="/delete/{{user.id}}" method="POST">
 <ul>
    <li>User ID: {{user.id}}</li>
    <li>First name: {{user.first_name}}</li>
    <li>Last name: {{user.last_name}}</li>
    <li>Image URL: {{user.img_url}}</li>
-   <a href="/users/edit/{{user.id}}">Edit User</a>
+   <a href="/users/edit/{{user.id}}" class="btn btn-success">Edit User</a>
    <form action="/users/delete/{{user.id}}" method="POST">
-      <a href="/users/delete/{{user.id}}">Delete User</a>
+      <a href="/users/delete/{{user.id}}" class="btn btn-danger">Delete User</a>
    </form>
 </ul>
 </form>
 
 
 
-<a href="/">Return Home</a>
+<a href="/" class="display-6">Return Home</a>
 
 {% endblock %}

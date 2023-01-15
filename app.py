@@ -24,13 +24,13 @@ def redirect_home():
    """sends to users page (home)"""
    return redirect('/users')
 
-@app.route('/users')
+@app.route('/users', methods=["GET"])
 def show_home():
    """displays homepage"""
    users = User.query.all()
    return render_template('home.html', users=users)
 
-@app.route('/users', methods=["POST"])
+@app.route('/users/add-user', methods=["POST"])
 def create_user():
    """adds new user to database and webpage"""
    first_name = request.form['fname']
@@ -44,7 +44,7 @@ def create_user():
    return redirect(f'/users/{new_user.id}')
 
 
-@app.route('/users/<int:user_id>')
+@app.route('/users/<int:user_id>', methods=["POST", "GET"])
 def show_user(user_id):
    """show details on specific user"""
    user = User.query.get_or_404(user_id)
