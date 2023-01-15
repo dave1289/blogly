@@ -1,7 +1,7 @@
 from unittest import TestCase
 
 from app import app
-from models import db, Pets
+from models import db, User
 
 # Use test database and don't clutter tests with SQL
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///pet_shop_db_test'
@@ -17,19 +17,19 @@ db.drop_all()
 db.create_all()
 
 
-class PetsViewsTestCase(TestCase):
-    """Tests for views for Pets."""
+class UserViewsTestCase(TestCase):
+    """Tests for views for User."""
 
     def setUp(self):
-        """Add sample pet."""
+        """Add sample user."""
 
-        Pets.query.delete()
+        User.query.delete()
 
-        pet = Pets(name="TestPet", species="dog", hunger=10)
-        db.session.add(pet)
+        user = User(first_name="Test", last_name="Human", img_url="")
+        db.session.add(user)
         db.session.commit()
 
-        self.id = pet.id
+        self.id = user.id
 
     def tearDown(self):
         """Clean up any fouled transaction."""
