@@ -9,6 +9,10 @@ def connect_db(app):
 class User(db.Model):
    __tablename__ = 'users'
 
+   @classmethod
+   def get_by_id(cls, id):
+      return cls.query.filter_by(id=id).one()
+      
    def __repr__(self):
       p = self
       return f'USER id={p.id} first_name={p.first_name} last_name={p.last_name} image_url={p.img_url}'

@@ -7,12 +7,12 @@ Edit User
 {% block body %}
 <h1>{{user.get_full_name()}}</h1>
 <h5>Edit user</h5>
-<form action="/users/update/{{user.id}}">
-<input type="text" name="fname" placeholder="new first name">
+<form action="/users/update/{{user.id}}" method="POST">
+<input type="text" name="fname" value="{{user.first_name}}">
 <br>
-<input type="text" name="lname" placeholder="new last name">
+<input type="text" name="lname" value="{{user.last_name}}">
 <br>
-<input type="text" name="img_url" placeholder="new image url">
+<input type="text" name="img_url" value="{{user.img_url}}">
 <br>
 <button>Submit Changes</button>
 </form>
