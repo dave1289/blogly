@@ -5,25 +5,46 @@ Users List
 {% endblock %}
 
 {% block body %}
-<h1 class="display-1 text-center">OUR USERS</h1>
-<ul>
-   {% for user in users%}
-   <li>
-   <a href="/users/{{user.user_id}}">{{user.get_full_name()}}</a>
-   </li>
-   {% endfor %} 
-</ul>
-<a href="/posts">Posts</a>
-<div class="user_form">
-<h2 class="display-5">Add user</h2>
-<form action="/users/add-user" method="POST">
-   <input type="text" name="fname" placeholder="first name">
-   <br>
-   <input type="text" name="lname" placeholder="last name">
-   <br>
-   <input type="text" name="img_url" placeholder="image url">
-   <br>
-   <button class="btn btn-primary">Submit User</button>
-</form>
-</div>
+<h1 class="display-2 text-center mb-100">Our users</h1>
+
+<div class="container text-center">
+   <div class="row">
+     <div class="col">
+      <ul id="users-list">
+         {% for user in users%}
+         <li>
+         <a href="/users/{{user.user_id}}">{{user.get_full_name()}}</a>
+         </li>
+         {% endfor %} 
+      </ul>
+     </div>
+     <div class="col">
+      <!-- spacer -->
+     </div>
+     <div class="col">
+      <div class="user_form">
+         <h2 class="display-6 text-center">Add user</h2>
+         <form action="/users/add-user" method="POST">
+            <input type="text" name="fname" placeholder="first name">
+            <br>
+            <input type="text" name="lname" placeholder="last name">
+            <br>
+            <input type="text" name="img_url" placeholder="image url">
+            <br>
+            <button class="btn btn-primary">Submit User</button>
+         </form>
+         </div>
+     </div>
+   </div>
+   <div class="row">
+     <div class="col">
+     </div>
+     <div class="col">
+         <a href="/posts">Posts</a>
+     </div>
+     <div class="col">
+     </div>
+   </div>
+ </div>
+
 {% endblock %}
