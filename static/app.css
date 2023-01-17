@@ -9,7 +9,6 @@ input {
 }
 
 .user_form {
-   position: absolute;
    display: flex;
    /* border: black 5px solid; */
 }
@@ -20,4 +19,11 @@ ul a {
 
 ul {
    list-style: none;
+}
+
+li {
+   border: solid rgba(0, 0, 0, 0.9) 2px;
+   border-radius: 5px;
+   padding: 25px 10px 25px 10px;
+   margin: 3px 0px 3px 0px;
 }

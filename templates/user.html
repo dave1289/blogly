@@ -12,9 +12,9 @@
    <li>First name: {{user.first_name}}</li>
    <li>Last name: {{user.last_name}}</li>
    <li>Image URL: {{user.img_url}}</li>
-   <a href="/users/edit/{{user.id}}" class="btn btn-success">Edit User</a>
-   <form action="/users/delete/{{user.id}}" method="POST">
-      <a href="/users/delete/{{user.id}}" class="btn btn-danger">Delete User</a>
+   <a href="/users/edit/{{user.user_id}}" class="btn btn-success">Edit User</a>
+   <form action="/users/delete/{{user.user_id}}" method="POST">
+      <a href="/users/delete/{{user.user_id}}" class="btn btn-danger">Delete User</a>
    </form>
 </ul>
 </form>

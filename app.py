@@ -1,12 +1,12 @@
 from flask import Flask, redirect, render_template, session, request, flash
 # from flask_debugtoolbar import DebugToolbarExtension
 from flask_sqlalchemy import SQLAlchemy
-from models import connect_db, db, User
+from models import connect_db, db, User, Post, get_posts
 
 
 app = Flask(__name__)
 
-# standardized sqlalchemy init setting and variable structure **RUN BEFORE LINE 12**
+# standardized sqlalchemy init setting and variable structure
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///user_db_ex1'
 app.config['SQLALCHEMY_ECHO'] = True
 app.config['SQLALCHEMY_TRACK_MODICATIONS'] = False
@@ -41,7 +41,7 @@ def create_user():
    new_user = User(first_name=first_name, last_name=last_name, img_url=img_url)
    db.session.add(new_user)
    db.session.commit()
-   return redirect(f'/users/{new_user.id}')
+   return redirect(f'/users/{new_user.user_id}')
 
 
 @app.route('/users/<int:user_id>', methods=["POST", "GET"])
@@ -60,6 +60,7 @@ def delete_user(user_id):
 
 @app.route('/users/edit/<user_id>')
 def show_edit_form(user_id):
+   """shows edit form -- defaults = current values"""
    user = User.query.get(user_id)
    return render_template('edit_user.html', user=user)
 
@@ -78,4 +79,10 @@ def update_user(user_id):
 
    db.session.add(user)
    db.session.commit()
-   return redirect(f'/users/{user.id}')
+   return redirect(f'/users/{user.user_id}')
+
+@app.route('/posts')
+def show_posts():
+   """shows posts page"""
+   posts = Post.query.all()
+   return render_template('posts.html', posts=posts)
