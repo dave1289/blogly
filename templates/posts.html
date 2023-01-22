@@ -15,5 +15,17 @@ Users List
    {% endfor %}
 </table>
 </div>
+<div class="container">
+   <form action="/posts/submit" method="POST">
+      <label for="poster">Select a user:</label>
+      <select name="user" id="poster">
+         {% for user in users %}
+         <option value="{{user.user_id}}">{{user.get_full_name()}}</option>
+         {% endfor %}
+      </select>
+      <input type="text" placeholder="Enter post here!" name="content">
+      <div class="btn btn-success">Submit</div>
+   </form>
+</div>
 <a href="/" class="display-6">Return Home</a>
-{% endblock %}
+{% endblock %} 

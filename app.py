@@ -1,6 +1,6 @@
 from flask import Flask, redirect, render_template, session, request, flash
 # from flask_debugtoolbar import DebugToolbarExtension
-from flask_sqlalchemy import SQLAlchemy
+# from flask_sqlalchemy import SQLAlchemy
 from models import connect_db, db, User, Post, get_posts
 
 
@@ -85,4 +85,15 @@ def update_user(user_id):
 def show_posts():
    """shows posts page"""
    posts = Post.query.all()
-   return render_template('posts.html', posts=posts)
+   users = User.query.all()
+   return render_template('posts.html', posts=posts, users=users)
+
+# NEEDS FURTHER TESTING !!!!
+@app.route('/posts.submit', methods=["POST"])
+def submit_post():
+   """submits new post's text"""
+   content = request.form['content']
+   new_post = Post(user_id=2, content=content)
+   db.session.add(new_post)
+   db.session.commit()
+   return redirect('/posts')
