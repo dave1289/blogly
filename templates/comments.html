@@ -3,15 +3,16 @@
 {% extends 'base.html' %}
 
 {% block title %}
-Users List
+Comments
 {% endblock %}
 
 {% block body %}
-<h1 class="display-1 text-center">Posts</h1>
+<h1 class="display-1 text-center">Comments</h1>
+<div class="display-4 text-center">{{post.content}}</div>
 <div class="container">
 <table class="table bg-light">
-   {% for post in posts %}
-   <tr><td><a href="/comments/{{post.post_id}}">{{post.content}}</a></td><td>{{post.user.get_full_name()}}</td></tr>
+   {% for comment in comments %}
+   <tr><td>{{comment.comment}}</td><td>{{comment.user.get_full_name()}}</td></tr>
    {% endfor %}
 </table>
 </div>
@@ -22,7 +23,7 @@ Users List
       <a href="/">Return Home</a>
      </div>
      <div class="col">
-      <a href="/posts/add">Add Post</a>
+      <a href="/posts">Posts</a>
      </div>
    </div>
  </div>

@@ -1,7 +1,7 @@
 from flask import Flask, redirect, render_template, session, request, flash
 # from flask_debugtoolbar import DebugToolbarExtension
 # from flask_sqlalchemy import SQLAlchemy
-from models import connect_db, db, User, Post, get_posts
+from models import connect_db, db, User, Post, get_posts, Comment
 from forms import AddPostForm, AddUserForm
 
 app = Flask(__name__)
@@ -95,20 +95,28 @@ def show_posts():
 @app.route('/posts/add', methods=["POST", "GET"])
 def add_post():
    """shows post submission WTForms"""
-   form = AddPostForm()
+   form = AddPostForm() 
+   users = db.session.query(User.user_id, User.first_name)
+
+   form.user.choices = users
    return render_template("add_post.html", form=form)
 
 @app.route('/posts/add/submit', methods=["POST"])
 def submit_post():
    """submits post to DB and redirects to post page"""
-   form = AddPostForm()
+   form = AddPostForm()  
    content = form.post.data
-   name = form.name.data
-
-   user = User.query.filter_by(first_name=name).first()
-   user_id = user.user_id
+   user = form.user.data
+   user_id = user[1]
    post = Post(user_id=user_id, content=content)
 
    db.session.add(post)
    db.session.commit()
    return redirect('/posts')
+
+@app.route('/comments/<post_id>', methods=['GET'])
+def show_comments(post_id):
+   """displays comments associated with post"""
+   post = Post.query.get(post_id)
+   comments = Comment.query.filter_by(post_id=post_id)
+   return render_template('comments.html', post=post, comments=comments)

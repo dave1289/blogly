@@ -1,10 +1,13 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField
+from wtforms import StringField, SelectField
 
 class AddPostForm(FlaskForm):
    """adding posts to blogly"""
 
-   name = StringField('Name')
+   # name = StringField('Name')
+   # creating dynamic selection field from users, above deprecated
+
+   user = SelectField('User')
    post = StringField('Post body')
 
 class AddUserForm(FlaskForm):
