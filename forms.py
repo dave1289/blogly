@@ -1,11 +1,11 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField
 
-class AddCommentForm(FlaskForm):
-   """adding comments to blogly"""
+class AddPostForm(FlaskForm):
+   """adding posts to blogly"""
 
-   user = StringField('Username')
-   Post = StringField('Post body')
+   name = StringField('Name')
+   post = StringField('Post body')
 
 class AddUserForm(FlaskForm):
 

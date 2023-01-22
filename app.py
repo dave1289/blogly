@@ -2,7 +2,7 @@ from flask import Flask, redirect, render_template, session, request, flash
 # from flask_debugtoolbar import DebugToolbarExtension
 # from flask_sqlalchemy import SQLAlchemy
 from models import connect_db, db, User, Post, get_posts
-from forms import AddCommentForm, AddUserForm
+from forms import AddPostForm, AddUserForm
 
 app = Flask(__name__)
 
@@ -34,15 +34,16 @@ def show_home():
 @app.route('/users/add-user', methods=["POST"])
 def create_user():
    """adds new user to database and webpage"""
-   first_name = request.form['fname']
-   last_name = request.form['lname']
-   img_url = request.form['img_url']
+   form = AddUserForm()
+   first_name = form.first_name.data
+   last_name = form.last_name.data
+   img_url = form.img_url.data
    img_url = img_url if img_url else None
 
    new_user = User(first_name=first_name, last_name=last_name, img_url=img_url)
    db.session.add(new_user)
    db.session.commit()
-   return redirect(f'/users/{new_user.user_id}')
+   return redirect('/users')
 
 
 @app.route('/users/<int:user_id>', methods=["POST", "GET"])
@@ -94,9 +95,20 @@ def show_posts():
 @app.route('/posts/add', methods=["POST", "GET"])
 def add_post():
    """shows post submission WTForms"""
-   form = AddCommentForm()
+   form = AddPostForm()
    return render_template("add_post.html", form=form)
 
-@app.route('/posts/add/submit')
+@app.route('/posts/add/submit', methods=["POST"])
 def submit_post():
-   return render_template('/posts')
+   """submits post to DB and redirects to post page"""
+   form = AddPostForm()
+   content = form.post.data
+   name = form.name.data
+
+   user = User.query.filter_by(first_name=name).first()
+   user_id = user.user_id
+   post = Post(user_id=user_id, content=content)
+
+   db.session.add(post)
+   db.session.commit()
+   return redirect('/posts')
