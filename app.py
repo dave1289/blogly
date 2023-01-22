@@ -2,7 +2,7 @@ from flask import Flask, redirect, render_template, session, request, flash
 # from flask_debugtoolbar import DebugToolbarExtension
 # from flask_sqlalchemy import SQLAlchemy
 from models import connect_db, db, User, Post, get_posts
-
+from forms import AddCommentForm
 
 app = Flask(__name__)
 
@@ -86,6 +86,7 @@ def show_posts():
    """shows posts page"""
    posts = Post.query.all()
    users = User.query.all()
+   form = AddCommentForm
    return render_template('posts.html', posts=posts, users=users)
 
 # NEEDS FURTHER TESTING !!!!

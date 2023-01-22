@@ -27,5 +27,12 @@ Users List
       <div class="btn btn-success">Submit</div>
    </form>
 </div>
+<form action="">
+   {% for field in form
+      if field.widget.input_type != 'hidden' %}
+      {{field.label}}
+      {{field}}
+   {% endfor %}
+</form>
 <a href="/" class="display-6">Return Home</a>
 {% endblock %} 
