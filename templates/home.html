@@ -9,7 +9,7 @@ Users List
 
 <div class="container text-center">
    <div class="row">
-     <div class="col">
+     <div class="col-2">
       <ul id="users-list">
          {% for user in users%}
          <li>
@@ -21,10 +21,20 @@ Users List
      <div class="col">
       <!-- spacer -->
      </div>
-     <div class="col">
+     <div class="col-2">
       <div class="user_form">
-         <h2 class="display-6 text-center">Add user</h2>
+         <h2 class="display-6">Add user</h2>
          <form action="/users/add-user" method="POST">
+            {% for field in form
+               if field.widget.input_type != 'hidden' %}
+               {{field.label}}
+               {{field}}
+            {% endfor %}
+            <button class="btn btn-primary">Submit</button>
+         </form>
+         <!-- old add user below using WTForms now -->
+         <!-- ******************************************************** -->
+         <!-- <form action="/users/add-user" method="POST">
             <input type="text" name="fname" placeholder="first name">
             <br>
             <input type="text" name="lname" placeholder="last name">
@@ -32,7 +42,7 @@ Users List
             <input type="text" name="img_url" placeholder="image url">
             <br>
             <button class="btn btn-primary">Submit User</button>
-         </form>
+         </form> -->
          </div>
      </div>
    </div>

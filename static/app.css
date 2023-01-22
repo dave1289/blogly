@@ -54,3 +54,7 @@ form {
    border-radius: 5px;
    box-shadow: 3px 1px 6px;
 }
+
+.btn {
+   margin: 10px 10px 10px 10px;
+}

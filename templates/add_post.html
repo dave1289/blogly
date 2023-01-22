@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
 
 {% block title %}
-Edit User
+New Post
 {% endblock %}
 
 {% block body %}
-<form action="/posts" method="POST">
+<div class="display-3">New Post</div>
+<form action="/posts/add/submit" method="POST">
    {% for field in form
       if field.widget.input_type != 'hidden' %}
       {{field.label}}

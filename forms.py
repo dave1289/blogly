@@ -5,4 +5,10 @@ class AddCommentForm(FlaskForm):
    """adding comments to blogly"""
 
    user = StringField('Username')
-   content = StringField('Comment')
+   Post = StringField('Post body')
+
+class AddUserForm(FlaskForm):
+
+   first_name = StringField('First name')
+   last_name = StringField('Last name')
+   img_url = StringField('Image URL')
