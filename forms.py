@@ -1,8 +1,8 @@
 from flask_wtf import FlaskForm
-from wtforms.fields import Stringfield
+from wtforms import StringField
 
 class AddCommentForm(FlaskForm):
    """adding comments to blogly"""
 
-   user = Stringfield('Username')
-   content = Stringfield('Comment')
+   user = StringField('Username')
+   content = StringField('Comment')

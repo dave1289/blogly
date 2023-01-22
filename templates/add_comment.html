@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Edit User
+{% endblock %}
+
+{% block body %}
+<form action="/posts" method="POST">
+   {% for field in form
+      if field.widget.input_type != 'hidden' %}
+      {{field.label}}
+      {{field}}
+   {% endfor %}
+   <button class="btn">Submit</button>
+</form>
+
+<a href="/">Return Home</a>
+
+{% endblock %}

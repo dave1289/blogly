@@ -24,3 +24,33 @@ li {
    padding: 25px 10px 25px 10px;
    margin: 3px 0px 3px 0px;
 }
+
+form {
+   margin-left: 30px;
+}
+
+.messages .error {
+   color: red;
+   background-color: rgba(255, 0, 0, 0.1);
+   border: 2px solid rgba(255, 0,0, 0.5);
+}
+
+.messages .success {
+   color: greenyellow;
+   background-color: rgba(0, 255, 0, 0.1);
+   border: 2px solid rgba(0, 255, 0, 0.5)
+}
+
+.messages {
+   padding: 1rem;
+   margin: auto;
+   width: 500px;
+   text-align: center;
+}
+
+.messages p {
+   padding: 1rem;
+   font-size: 1.5rem;
+   border-radius: 5px;
+   box-shadow: 3px 1px 6px;
+}

@@ -7,20 +7,41 @@
 {% block body %}
 <h1 class="display-1 text-center">User Details</h1>
 <form action="/delete/{{user.id}}" method="POST">
-<ul>
-   <li>User ID: {{user.user_id}}</li>
-   <li>First name: {{user.first_name}}</li>
-   <li>Last name: {{user.last_name}}</li>
-   <li>Image URL: {{user.img_url}}</li>
-   <a href="/users/edit/{{user.user_id}}" class="btn btn-success">Edit User</a>
-   <form action="/users/delete/{{user.user_id}}" method="POST">
-      <a href="/users/delete/{{user.user_id}}" class="btn btn-danger">Delete User</a>
-   </form>
-</ul>
+   <div class="container">
+      <table class="table table-striped text-center">
+      <tbody>
+         <tr>
+            <td>User ID:</td>
+            <td>{{user.user_id}}</td>
+         </tr>
+         <tr>
+            <td>Name:</td>
+            <td>{{user.get_full_name()}}</td>
+         </tr>
+         <tr>
+            <td>Img URL:</td>
+            <td>{{user.img_url}}</td>
+         </tr>
+      </tbody>
+   </table>
+</div>
+<div class="container text-center">
+   <div class="row">
+     <div class="col">
+      <a href="/users/edit/{{user.user_id}}" class="btn btn-primary">Edit User</a>
+     </div>
+     <div class="col">
+      <form action="/users/delete/{{user.user_id}}" method="POST">
+         <a href="/users/delete/{{user.user_id}}" class="btn btn-danger">Delete User</a>
+         </form>
+     </div>
+   </div>
+ </div>
+
 </form>
 
 
 
-<a href="/" class="display-6">Return Home</a>
+<a href="/">Return Home</a>
 
 {% endblock %}

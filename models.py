@@ -46,6 +46,7 @@ class Post(db.Model):
    # adds ability to pull POST.**post_user**(from below) to pull properties from user associated with post
    # ie ... test_post.post_user.first_name gives us user.first_name attached to post
    user_posts = db.relationship('User_Post', backref='content')
+   user = db.relationship('User', backref='user')
 
 class User_Post(db.Model):
    """users to posts many to many"""

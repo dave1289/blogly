@@ -86,7 +86,6 @@ def show_posts():
    """shows posts page"""
    posts = Post.query.all()
    users = User.query.all()
-   form = AddCommentForm
    return render_template('posts.html', posts=posts, users=users)
 
 # NEEDS FURTHER TESTING !!!!
@@ -98,3 +97,9 @@ def submit_post():
    db.session.add(new_post)
    db.session.commit()
    return redirect('/posts')
+
+@app.route('/posts/add', methods=["POST", "GET"])
+def add_post():
+   """shows post submission WTForms"""
+   form = AddCommentForm()
+   return render_template("add_comment.html", form=form)
