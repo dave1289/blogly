@@ -21,3 +21,11 @@ class AddUserForm(FlaskForm):
    last_name = StringField('Last name',
                            validators=[InputRequired()])
    img_url = StringField('Image URL')
+
+class AddCommentForm(FlaskForm):
+
+   user = SelectField('User',
+                     validators=[InputRequired()])
+
+   comment = StringField('Comment',
+                     validators=[InputRequired()])     

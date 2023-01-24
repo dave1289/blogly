@@ -2,7 +2,7 @@ from flask import Flask, redirect, render_template, session, request, flash
 # from flask_debugtoolbar import DebugToolbarExtension
 # from flask_sqlalchemy import SQLAlchemy
 from models import connect_db, db, User, Post, get_posts, Comment
-from forms import AddPostForm, AddUserForm
+from forms import AddPostForm, AddUserForm, AddCommentForm
 
 app = Flask(__name__)
 
@@ -62,7 +62,7 @@ def delete_user(user_id):
 
 @app.route('/users/edit/<user_id>', methods=["POST", "GET"])
 def show_edit_form(user_id):
-   """shows edit form -- defaults = current values"""
+   """shows edit form -- defaults = current values and processes edits"""
    user = User.query.get_or_404(user_id)
    form = AddUserForm(obj=user)
    if form.is_submitted():
@@ -79,14 +79,9 @@ def show_edit_form(user_id):
       db.session.commit()
       return redirect(f'/users/{user.user_id}')
 
-
    else:
       return render_template('edit_user.html', user=user, form=form)
 
-@app.route('/users/update/<user_id>', methods=["POST"])
-def update_user(user_id):
-   """updates user information with default values as current values"""
-   
 
 @app.route('/posts')
 def show_posts():
@@ -120,9 +115,26 @@ def add_post():
       return render_template("add_post.html", form=form)
 
 
-@app.route('/comments/<post_id>', methods=['GET'])
+@app.route('/comments/<post_id>', methods=['POST','GET'])
 def show_comments(post_id):
    """displays comments associated with post"""
    post = Post.query.get(post_id)
    comments = Comment.query.filter_by(post_id=post_id)
-   return render_template('comments.html', post=post, comments=comments)
+   form = AddCommentForm()
+   users = list(db.session.query(User.user_id, User.first_name))
+   choices = []
+   for user in users:
+      choices.append(tuple(user))
+   form.user.choices = choices
+   return render_template('comments.html', post=post, comments=comments, form=form)
+
+@app.route('/comments/submit/<post_id>', methods=['POST'])
+def submit_comment(post_id):
+   """submits comment to post and redirects to post"""
+   form = AddCommentForm()
+   comment = form.comment.data
+   user = form.user.data
+   comment = Comment(post_id=post_id, user_id=user, comment=comment)
+   db.session.add(comment)
+   db.session.commit()
+   return redirect(f'/comments/{post_id}')
