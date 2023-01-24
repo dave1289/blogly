@@ -14,6 +14,7 @@ class AddPostForm(FlaskForm):
    post = StringField('Post body',
                      validators=[InputRequired()])
 
+
 class AddUserForm(FlaskForm):
 
    first_name = StringField('First name',
@@ -21,6 +22,7 @@ class AddUserForm(FlaskForm):
    last_name = StringField('Last name',
                            validators=[InputRequired()])
    img_url = StringField('Image URL')
+
 
 class AddCommentForm(FlaskForm):
 

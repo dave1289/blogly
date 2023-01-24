@@ -10,17 +10,18 @@ New Post
 <form action="/posts/add" method="POST">
    {% for field in form
       if field.widget.input_type != 'hidden' %}
+      <div class="form-group">
       {{field.label}}
-      {{field}}
+      {{field(class_="inputs")}}
 
       {% for err in field.errors %}
-      {{err}}
+      <small class="form-text">{{err}}</small>
       {% endfor %}
+      </div>
    {% endfor %}
    <br>
    <button>Submit</button>
 </form>
 
-<a href="/">Return Home</a>
 
 {% endblock %}

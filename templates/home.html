@@ -27,8 +27,14 @@ Users List
          <form action="/users/add-user" method="POST">
             {% for field in form
                if field.widget.input_type != 'hidden' %}
+               <div class="form-group">
                {{field.label}}
-               {{field}}
+               {{field(class_="inputs")}}
+         
+               {% for err in field.errors %}
+               <small class="form-text">{{err}}</small>
+               {% endfor %}
+               </div>
             {% endfor %}
             <button>Submit</button>
          </form>
@@ -46,15 +52,6 @@ Users List
          </div>
      </div>
    </div>
-   <div class="row">
-     <div class="col">
-     </div>
-     <div class="col">
-         <a href="/posts">Posts</a>
-     </div>
-     <div class="col">
-     </div>
-   </div>
- </div>
+
 
 {% endblock %}

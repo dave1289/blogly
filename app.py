@@ -90,7 +90,6 @@ def show_posts():
    users = User.query.all()
    return render_template('posts.html', posts=posts, users=users)
 
-# NEEDS FURTHER TESTING !!!!
 
 @app.route('/posts/add', methods=["POST", "GET"])
 def add_post():

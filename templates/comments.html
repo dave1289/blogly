@@ -21,25 +21,17 @@ Comments
   <form action="/comments/submit/{{post.post_id}}" method="POST">
     {% for field in form
       if field.widget.input_type != 'hidden' %}
+      <div class="form-group">
       {{field.label}}
-      {{field}}
+      {{field(class_="inputs")}}
 
       {% for err in field.errors %}
-      {{err}}
+      <small class="form-text">{{err}}</small>
       {% endfor %}
+      </div>
    {% endfor %}
    <button>Submit</button>
   </form>
 </div>
 
-<div class="container text-center">
-   <div class="row">
-     <div class="col">
-      <a href="/">Return Home</a>
-     </div>
-     <div class="col">
-      <a href="/posts">Posts</a>
-     </div>
-   </div>
- </div>
 {% endblock %} 
