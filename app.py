@@ -60,28 +60,33 @@ def delete_user(user_id):
    db.session.commit();
    return redirect('/')
 
-@app.route('/users/edit/<user_id>')
+@app.route('/users/edit/<user_id>', methods=["POST", "GET"])
 def show_edit_form(user_id):
    """shows edit form -- defaults = current values"""
-   user = User.query.get(user_id)
-   return render_template('edit_user.html', user=user)
+   user = User.query.get_or_404(user_id)
+   form = AddUserForm(obj=user)
+   if form.is_submitted():
+      first_name = form.first_name.data
+      last_name = form.last_name.data
+      img_url = form.img_url.data
+      img_url = img_url if img_url else None
+
+      user.first_name = first_name
+      user.last_name = last_name
+      user.img_url = img_url
+
+      db.session.add(user)
+      db.session.commit()
+      return redirect(f'/users/{user.user_id}')
+
+
+   else:
+      return render_template('edit_user.html', user=user, form=form)
 
 @app.route('/users/update/<user_id>', methods=["POST"])
 def update_user(user_id):
    """updates user information with default values as current values"""
-   first_name = request.form['fname']
-   last_name = request.form['lname']
-   img_url = request.form['img_url']
-   img_url = img_url if img_url else None
-
-   user = User.query.get_or_404(user_id)
-   user.first_name = first_name
-   user.last_name = last_name
-   user.img_url = img_url
-
-   db.session.add(user)
-   db.session.commit()
-   return redirect(f'/users/{user.user_id}')
+   
 
 @app.route('/posts')
 def show_posts():
@@ -96,23 +101,24 @@ def show_posts():
 def add_post():
    """shows post submission WTForms"""
    form = AddPostForm() 
-   users = db.session.query(User.user_id, User.first_name)
+   users = list(db.session.query(User.user_id, User.first_name))
+   choices = []
+   for user in users:
+      choices.append(tuple(user))
+   form.user.choices = choices
+   if form.is_submitted():
+      content = form.post.data
+      user = form.user.data
+      user_id = user
 
-   form.user.choices = users
-   return render_template("add_post.html", form=form)
+      post = Post(user_id=user_id, content=content)
 
-@app.route('/posts/add/submit', methods=["POST"])
-def submit_post():
-   """submits post to DB and redirects to post page"""
-   form = AddPostForm()  
-   content = form.post.data
-   user = form.user.data
-   user_id = user[1]
-   post = Post(user_id=user_id, content=content)
+      db.session.add(post)
+      db.session.commit()
+      return redirect('/posts')
+   else:
+      return render_template("add_post.html", form=form)
 
-   db.session.add(post)
-   db.session.commit()
-   return redirect('/posts')
 
 @app.route('/comments/<post_id>', methods=['GET'])
 def show_comments(post_id):

@@ -5,12 +5,17 @@ New Post
 {% endblock %}
 
 {% block body %}
+
 <div class="display-3">New Post</div>
-<form action="/posts/add/submit" method="POST">
+<form action="/posts/add" method="POST">
    {% for field in form
       if field.widget.input_type != 'hidden' %}
       {{field.label}}
       {{field}}
+
+      {% for err in field.errors %}
+      {{err}}
+      {% endfor %}
    {% endfor %}
    <br>
    <button>Submit</button>

@@ -6,15 +6,18 @@ Edit User
 
 {% block body %}
 <h1 class="display-1">{{user.get_full_name()}}</h1>
-<h5>Edit user</h5>
-<form action="/users/update/{{user.user_id}}" method="POST">
-<input type="text" name="fname" value="{{user.first_name}}">
-<br>
-<input type="text" name="lname" value="{{user.last_name}}">
-<br>
-<input type="text" name="img_url" value="{{user.img_url}}">
-<br>
-<button>Submit Changes</button>
+<form action="/users/edit/{{user.user_id}}" method="POST">
+   {% for field in form
+      if field.widget.input_type != 'hidden' %}
+      {{field.label}}
+      {{field}}
+
+      {% for err in field.errors %}
+      {{err}}
+      {% endfor %}
+   {% endfor %}
+   <br>
+   <button>Submit</button>
 </form>
 
 
