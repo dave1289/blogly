@@ -3,10 +3,15 @@ from unittest import TestCase
 from app import app
 from models import db, User
 
+# ***********************************************************************************
+# TEST DEPEND ON INCLUDED SEED FILE
+# *********************************************************************************
+
 # Use test database and don't clutter tests with SQL
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///pet_shop_db_test'
 app.config['SQLALCHEMY_ECHO'] = False
-
+# BELOW IS ONLY FOR TESTING
+app.config['WTF_CSRF_ENABLED'] = False
 # Make Flask errors be real errors, rather than HTML pages with error info
 app.config['TESTING'] = True
 
@@ -35,3 +40,23 @@ class UserViewsTestCase(TestCase):
         """Clean up any fouled transaction."""
 
         db.session.rollback()
+
+    def test_home(self):
+        with app.test_client() as client:
+            resp = client.get('/')
+            html = resp.get_data(as_text=True)
+
+            self.assertEqual(resp.status_code, 200)
+            self.assertIn('BlogLy', html)
+    
+    def test_post_table(self):
+        with app.test_client() as client:
+            resp = client.get('/posts')
+            html = resp.get_data(as_text=True)
+
+            self.assertEqual(resp.status_code, 200)
+            self.assertIn('Flenck', html)
+
+    def test_add_user(self):
+        with app.test_client() as client:
+            resp = client.get('')
